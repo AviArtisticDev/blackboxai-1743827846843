@@ -1,0 +1,17 @@
+{
+    "email": {
+        "sender": "alerts@yourdomain.com",
+        "recipients": ["security@yourdomain.com", "admin@yourdomain.com"],
+        "smtp_host": "smtp.yourdomain.com",
+        "smtp_port": 587,
+        "smtp_user": "alerts@yourdomain.com",
+        "smtp_password": "your_email_password",
+        "smtp_tls": true
+    },
+    "twilio": {
+        "account_sid": "your_twilio_account_sid",
+        "auth_token": "your_twilio_auth_token",
+        "from_number": "+1234567890",
+        "to_number": "+1098765432"
+    }
+}
