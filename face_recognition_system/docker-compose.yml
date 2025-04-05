@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=sqlite:///data/criminal_db.sqlite
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - face-recognition-net
+
+  frontend:
+    build:
+      context: ./ui/web
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - face-recognition-net
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ui/web/build:/usr/share/nginx/html
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - face-recognition-net
+
+networks:
+  face-recognition-net:
+    driver: bridge
+
+volumes:
+  data:
